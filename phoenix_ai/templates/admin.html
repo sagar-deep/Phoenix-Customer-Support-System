@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Phoenix AI – Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css"/>
+<link rel="stylesheet" href="/static/css/admin.css"/>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow-orb orb1"></div>
+<div class="glow-orb orb2"></div>
+
+<header class="header">
+  <div class="logo">
+    <span class="logo-icon">⚡</span>
+    <span>Phoenix <span class="accent">AI</span></span>
+  </div>
+  <nav class="nav">
+    <a href="/" class="nav-link">Chat</a>
+    <a href="/admin" class="nav-link active">Admin</a>
+    <span class="admin-user">👤 {{ admin_name }}</span>
+    <a href="/admin/logout" class="nav-link logout-link">Logout</a>
+  </nav>
+</header>
+
+<main class="admin-main">
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-num">{{ complaints|length }}</div>
+      <div class="stat-lbl">Total Tickets</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ complaints|selectattr('status','equalto','Open')|list|length }}</div>
+      <div class="stat-lbl">Open</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ complaints|selectattr('status','equalto','Closed')|list|length }}</div>
+      <div class="stat-lbl">Closed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ orders|length }}</div>
+      <div class="stat-lbl">Orders Tracked</div>
+    </div>
+  </div>
+
+  <!-- Complaints Table -->
+  <div class="admin-section">
+    <div class="section-header">
+      <h2>🎫 Complaints</h2>
+      <a href="/api/export" class="export-btn">⬇ Export CSV</a>
+    </div>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Ticket ID</th><th>Category</th><th>Description</th>
+            <th>Status</th><th>Filed On</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="complaintsBody">
+          {% for c in complaints %}
+          <tr id="row-{{ c.id }}">
+            <td><code>{{ c.ticket_id }}</code></td>
+            <td>{{ c.category }}</td>
+            <td class="desc-cell">{{ c.description }}</td>
+            <td>
+              <span class="badge {{ 'badge-open' if c.status == 'Open' else 'badge-closed' }}">
+                {{ c.status }}
+              </span>
+            </td>
+            <td>{{ c.created_at.strftime('%d %b %Y') }}</td>
+            <td class="action-cell">
+              {% if c.status == 'Open' %}
+              <button class="tbl-btn btn-close" onclick="closeTicket({{ c.id }})">Close</button>
+              {% else %}
+              <button class="tbl-btn btn-reopen" onclick="reopenTicket({{ c.id }})">Re-open</button>
+              {% endif %}
+              <button class="tbl-btn btn-del" onclick="deleteTicket({{ c.id }})">Delete</button>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6" style="text-align:center;opacity:.5">No complaints yet</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="admin-section">
+    <div class="section-header">
+      <h2>📦 Orders</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Order ID</th><th>Status</th><th>Tracked On</th></tr>
+        </thead>
+        <tbody>
+          {% for o in orders %}
+          <tr>
+            <td><code>{{ o.order_id }}</code></td>
+            <td><span class="badge badge-{{ o.status.replace(' ','_') }}">{{ o.status }}</span></td>
+            <td>{{ o.created_at.strftime('%d %b %Y %H:%M') }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="3" style="text-align:center;opacity:.5">No orders yet</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script src="/static/js/admin.js"></script>
+</body>
+</html>

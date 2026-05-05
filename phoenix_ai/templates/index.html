@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Phoenix AI – Customer Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<!-- ── BACKGROUND GRID ── -->
+<div class="grid-bg"></div>
+<div class="glow-orb orb1"></div>
+<div class="glow-orb orb2"></div>
+
+<!-- ── HEADER ── -->
+<header class="header">
+  <div class="logo">
+    <span class="logo-icon">⚡</span>
+    <span>Phoenix <span class="accent">AI</span></span>
+  </div>
+  <nav class="nav">
+    <a href="/" class="nav-link active">Chat</a>
+    <a href="/admin" class="nav-link">Admin</a>
+  </nav>
+</header>
+
+<!-- ── MAIN LAYOUT ── -->
+<main class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3 class="sidebar-title">Quick Actions</h3>
+    <div class="quick-btns">
+      <button class="qbtn" data-msg="track order">🚚 Track Order</button>
+      <button class="qbtn" data-msg="payment help">💳 Payment Help</button>
+      <button class="qbtn" data-msg="complaint">📝 File Complaint</button>
+      <button class="qbtn" data-msg="refund">💰 Refund</button>
+      <button class="qbtn" data-msg="services">🌟 Services</button>
+      <button class="qbtn" data-msg="history">📋 History</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="sidebar-title">Commands</h3>
+    <div class="cmd-list">
+      <code>complaint</code>
+      <code>history</code>
+      <code>search ST101</code>
+      <code>close ST101</code>
+      <code>N642DT684</code>
+    </div>
+
+    <div class="divider"></div>
+
+    <button class="export-btn" id="exportBtn">⬇ Export CSV</button>
+  </aside>
+
+  <!-- CHAT PANEL -->
+  <section class="chat-panel">
+    <div class="chat-header">
+      <div class="agent-info">
+        <div class="agent-avatar">🤖</div>
+        <div>
+          <div class="agent-name">Phoenix Bot</div>
+          <div class="agent-status"><span class="dot"></span> Online</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chatBox">
+      <div class="msg bot">
+        <div class="bubble">
+          👋 Welcome to <strong>Phoenix AI Support</strong>!<br>
+          Type <code>help</code> to see what I can do, or use the quick actions on the left.
+        </div>
+        <div class="ts">Just now</div>
+      </div>
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="typing-indicator" id="typingIndicator">
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="chat-input-row">
+      <input id="msgInput" type="text" placeholder="Type a message…" autocomplete="off"/>
+      <button id="sendBtn">Send ↑</button>
+    </div>
+  </section>
+
+  <!-- COMPLAINT PANEL -->
+  <aside class="right-panel">
+    <h3 class="sidebar-title">Recent Tickets</h3>
+    <div id="ticketList" class="ticket-list">
+      <div class="ticket-empty">No tickets yet</div>
+    </div>
+    <button class="refresh-btn" id="refreshTickets">↻ Refresh</button>
+  </aside>
+
+</main>
+
+<script src="/static/js/chat.js"></script>
+</body>
+</html>

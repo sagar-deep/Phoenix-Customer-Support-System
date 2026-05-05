@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Phoenix AI – Admin Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css"/>
+<style>
+  body { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+
+  .login-card {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 420px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 44px 40px 36px;
+    box-shadow: 0 24px 64px rgba(0,0,0,.6);
+    animation: cardIn .35s ease;
+  }
+  @keyframes cardIn {
+    from { opacity:0; transform:translateY(24px) scale(.97); }
+    to   { opacity:1; transform:translateY(0)    scale(1);   }
+  }
+
+  .login-logo {
+    text-align: center; margin-bottom: 6px;
+    font-size: 2.4rem; font-weight: 800;
+  }
+  .login-sub {
+    text-align: center; color: var(--muted);
+    font-size: .8rem; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 36px;
+  }
+
+  .field { display:flex; flex-direction:column; gap:7px; margin-bottom:18px; }
+  .field label {
+    font-size: .75rem; font-weight: 700;
+    color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase;
+  }
+  .field input {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text); font-family: var(--mono); font-size: .9rem;
+    padding: 11px 14px; outline: none; transition: border .2s;
+  }
+  .field input:focus { border-color: var(--accent); }
+  .field input::placeholder { color: var(--muted); }
+
+  .login-btn {
+    width: 100%; margin-top: 8px;
+    background: var(--accent); color: #000;
+    border: none; border-radius: var(--radius);
+    padding: 13px; font-family: var(--font);
+    font-weight: 800; font-size: .95rem;
+    cursor: pointer; letter-spacing: .5px;
+    transition: all .18s;
+  }
+  .login-btn:hover { background: var(--accent2); transform: translateY(-2px); }
+  .login-btn:active { transform: translateY(0); }
+
+  .error-msg {
+    background: rgba(239,68,68,.12);
+    border: 1px solid rgba(239,68,68,.35);
+    border-radius: var(--radius);
+    color: #f87171; font-size: .82rem;
+    padding: 10px 14px; margin-bottom: 18px;
+    text-align: center; animation: shake .3s ease;
+  }
+  @keyframes shake {
+    0%,100%{ transform:translateX(0) }
+    25%    { transform:translateX(-6px) }
+    75%    { transform:translateX(6px) }
+  }
+
+  .back-link {
+    display: block; text-align: center;
+    margin-top: 22px; font-size: .78rem;
+    color: var(--muted); text-decoration: none;
+    transition: color .15s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .hint {
+    margin-top: 20px; padding: 12px 14px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: .74rem; color: var(--muted);
+    font-family: var(--mono); line-height: 1.7;
+  }
+  .hint span { color: var(--accent2); }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow-orb orb1"></div>
+<div class="glow-orb orb2"></div>
+
+<div class="login-card">
+  <div class="login-logo">⚡ Phoenix <span class="accent">AI</span></div>
+  <div class="login-sub">Admin Portal</div>
+
+  {% if error %}
+  <div class="error-msg">🔒 {{ error }}</div>
+  {% endif %}
+
+  <form method="POST" action="/admin/login">
+    <div class="field">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="admin@phoenix.ai"
+             value="{{ prefill or '' }}" required autofocus/>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" name="password" placeholder="••••••••" required/>
+    </div>
+    <button type="submit" class="login-btn">Sign In →</button>
+  </form>
+
+  <a href="/" class="back-link">← Back to Chat</a>
+</div>
+
+</body>
+</html>
