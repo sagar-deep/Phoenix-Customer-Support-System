@@ -1,6 +1,6 @@
-# Phoenix AI – Customer Support System
+# Phoenix Customer Support System 
 
-A DBMS-based web application built with **Python (Flask)** and **MySQL**.
+A customer support and complaint management system built with **Python (Flask)** and **MySQL**.
 
 ---
 
@@ -8,7 +8,7 @@ A DBMS-based web application built with **Python (Flask)** and **MySQL**.
 
 ```
 phoenix_ai/
-├── app.py               ← Flask application (routes, chatbot brain)
+├── app.py               ← Flask application (routes, chatbot logic)
 ├── db.py                ← MySQL connection helper
 ├── setup.sql            ← Database & sample data
 ├── requirements.txt
